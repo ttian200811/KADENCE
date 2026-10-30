@@ -394,9 +394,6 @@
   .dj-view { position: relative; width: 100%; height: 100%; overflow: hidden; touch-action: none; cursor: grab; user-select: none; -webkit-user-select: none; background: var(--dj-wall); perspective: 1100px; perspective-origin: 50% 70%; }
   .dj-view:active { cursor: grabbing; }
   .dj-view { contain: layout paint; }
-  .dj-freeze { position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: 0; transition: opacity .25s ease-out; background: radial-gradient(ellipse at 50% 55%, transparent 45%, color-mix(in srgb, var(--dj-floor) 80%, transparent) 100%), color-mix(in srgb, var(--dj-floor) 12%, transparent); }
-  .dj-view.panning .dj-freeze { opacity: 1; }                               /* a soft vignette and dimming while time is stopped */
-  .dj-view.panning * { animation-play-state: paused !important; }      /* characters hold still while the camera moves, which keeps the swipe smooth */
   .dj-room { position: absolute; left: 50%; top: 84%; width: 0; height: 0; transform-style: preserve-3d; will-change: transform; }
   .dj-floor { position: absolute; left: -950px; top: -900px; width: 1900px; height: 1800px; transform: translateZ(-400px) rotateX(90deg); background-color: var(--dj-floor);
     background-image: linear-gradient(var(--dj-grid2) 2px, transparent 2px), linear-gradient(90deg, var(--dj-grid2) 2px, transparent 2px), linear-gradient(var(--dj-grid) 2px, transparent 2px), linear-gradient(90deg, var(--dj-grid) 2px, transparent 2px);
@@ -410,7 +407,6 @@
   .dj-wall.side { left: -650px; top: calc(-1 * var(--wallh, 280px)); width: 1300px; height: var(--wallh, 280px); }
   .dj-wall.l { transform: translate3d(-950px, 0, -650px) rotateY(90deg); } .dj-wall.r { transform: translate3d(950px, 0, -650px) rotateY(-90deg); }
   .dj-wall.far { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 70px; box-sizing: border-box; text-align: center; color: var(--dj-line); font-family: var(--font-m); }
-  .dj-sign b { display: block; font-size: 42px; font-weight: 800; letter-spacing: .08em; white-space: nowrap; line-height: 1; color: transparent; -webkit-text-stroke: 2px var(--dj-line); }
   .dj-rail { position: absolute; left: -1.5px; top: -480px; width: 3px; height: 960px; background: var(--dj-line); opacity: .8; }
   /* An upright object: its base sits on the floor at (x, z) and it is tipped back by the camera pitch so it faces you */
   .bb { position: absolute; left: 0; top: 0; width: 0; height: 0; transform-style: preserve-3d; cursor: default; }
@@ -440,24 +436,36 @@
   .dj-hint.gone { opacity: 0; }
   svg.fx-interval { transform-origin: 50% 100%; animation: st-pulse .3s ease-out; }
   svg.fx-interval .fan { animation: fan-spin .32s ease-out; }
-  .fan { animation: fan-idle 9s linear infinite; }
-  .book { transform-box: fill-box; transform-origin: 50% 100%; }
+  .fan { animation: fan-idle 3s linear infinite; }
+  .arm-a, .arm-b, .crank, .pedal { transform-box: view-box; }
+  .arm-a { transform-origin: 120px 206px; animation: arm-a 1.6s ease-in-out infinite alternate; } .arm-b { transform-origin: 134px 218px; animation: arm-b 1.6s ease-in-out infinite alternate; }
+  .crank { transform-origin: 212px 238px; animation: bike-spin 3.2s linear infinite; } .pedal { animation: bike-spin 3.2s linear infinite reverse; }
+  @keyframes arm-a { from { transform: rotate(-9deg); } to { transform: rotate(9deg); } } @keyframes arm-b { from { transform: rotate(9deg); } to { transform: rotate(-9deg); } }
+  @keyframes bike-spin { to { transform: rotate(360deg); } }
   .sc-blue.pop { animation: score-flash .6s ease-out; }
+  .sc-red.pop { animation: score-flash-red .6s ease-out; }
+  @keyframes score-flash-red { 0%, 30% { fill: #ffd9d4; } 100% { fill: var(--dj-red); } }
   @keyframes score-flash { 0%, 30% { fill: #d6e6ff; } 100% { fill: #4c8df6; } }
-  .page { transform-box: view-box; transform-origin: 54px 40px; animation: page-turn 7s ease-in-out infinite; }
-  svg.fx-kdb { transform-origin: 50% 100%; animation: st-pulse .3s ease-out; } svg.fx-kdb .book { animation: page-flip .3s ease-out; }
-  .fan { transform-box: view-box; transform-origin: 74px 118px; }
+  .page { transform-box: view-box; transform-origin: 120px 70px; opacity: 0; animation: page-flip 1.2s ease-in-out infinite; }
+  svg.fx-kdb { transform-origin: 50% 100%; animation: st-pulse .3s ease-out; } 
+  .fan { transform-box: fill-box; transform-origin: 50% 50%; }
   .sc-glow { opacity: 0; animation: sc-glow 2.4s ease-in-out infinite; } .sc-screen { animation: sc-screen 2.4s ease-in-out infinite; }
   .sc-red, .sc-blue, .sc-colon { animation: sc-digit 2.4s ease-in-out infinite; } .sc-blue { animation-delay: -.3s; }
   svg.fx-spar .sc-glow { animation: sc-burst .5s ease-out; }
+  svg.lit-blue .sc-glow { fill: #4c8df6 !important; } svg.lit-red .sc-glow { fill: var(--dj-red) !important; }
+  svg.lit-blue { animation: lit-blue .5s ease-out; } svg.lit-red { animation: lit-red .5s ease-out; }
+  .dj-floor svg.lit-blue { animation: none; } .dj-floor svg.lit-red { animation: none; }
+  .dj-floor svg.lit-blue .ring-blue { fill: #4c8df6; animation: half-lit .5s ease-out; } .dj-floor svg.lit-red .ring-red { fill: var(--dj-red); animation: half-lit .5s ease-out; }
+  @keyframes half-lit { 0% { fill-opacity: .5; stroke-width: 8; } 100% { fill-opacity: 0; stroke-width: 3; } }
+  @keyframes lit-blue { 0% { filter: drop-shadow(0 0 16px #4c8df6) brightness(1.2); } 100% { filter: drop-shadow(0 0 0 #4c8df6); } }
+  @keyframes lit-red { 0% { filter: drop-shadow(0 0 16px var(--dj-red)) brightness(1.2); } 100% { filter: drop-shadow(0 0 0 var(--dj-red)); } }
   @keyframes sc-glow { 0%, 100% { opacity: .04; } 50% { opacity: .28; } }
   @keyframes sc-screen { 0%, 100% { stroke-opacity: .35; } 50% { stroke-opacity: 1; } }
   @keyframes sc-digit { 0%, 100% { opacity: .75; } 50% { opacity: 1; } }
   @keyframes sc-burst { 0% { opacity: .8; } 100% { opacity: .1; } }
   svg.fx-reflex { transform-origin: 50% 100%; animation: st-pulse .3s ease-out; }
   svg.fx-reflex .pod { stroke: var(--primary); animation: pod-flash .32s ease-out; }
-  @keyframes page-turn { 0%, 78% { transform: scaleX(1); } 86% { transform: scaleX(.05); } 94% { transform: scaleX(-1); } 98% { transform: scaleX(-1); opacity: 1; } 99% { transform: scaleX(-1); opacity: 0; } 100% { transform: scaleX(1); opacity: 0; } }
-  @keyframes page-flip { 0% { transform: scaleX(1); } 50% { transform: scaleX(.3) translateY(-3px); } 100% { transform: scaleX(1); } }
+  @keyframes page-flip { 0%, 40% { transform: scaleX(1); opacity: 0; } 41% { transform: scaleX(1); opacity: 1; } 64% { transform: scaleX(.05) translateY(-9px); } 88% { transform: scaleX(-1); opacity: 1; } 89%, 100% { transform: scaleX(-1); opacity: 0; } }
   @keyframes st-pulse { 0% { transform: scale(1); } 35% { transform: scale(1.07); } 100% { transform: scale(1); } }
   @keyframes fan-idle { to { transform: rotate(360deg); } }
   @keyframes fan-spin { to { transform: rotate(540deg); } }
@@ -1938,34 +1946,53 @@ function nameSheet(st) {
 /* ---------- Train tab: the Dojang ---------- */
 // A 3D gym. The floor is a plane laid flat, upright pieces stand on it, and the whole room is pitched down slightly towards you.
 // Drag sideways to look around the room; there is a little give up and down too.
-const DJ = { frame: 0, busy: false, x: 0, y: 0, z: 260, minX: -480, maxX: 440, minY: -60, maxY: 60, minZ: 260, maxZ: 260, raf: 0, suppress: 0, hintGone: false };
+const DJ = { frame: 0, busy: false, x: 0, y: 0, z: 260, minX: -480, maxX: 570, minY: -60, maxY: 60, minZ: 260, maxZ: 260, raf: 0, suppress: 0, hintGone: false };
 const djOct = (cx, cy, r) => [...Array(8)].map((_, i) => { const a = Math.PI / 8 + i * Math.PI / 4; return (cx + r * Math.cos(a)).toFixed(1) + ',' + (cy + r * Math.sin(a)).toFixed(1); }).join(' ');
 const djBagSvg = (red, cls = '') => `<svg class="bag-svg ${cls}" viewBox="0 0 120 330" width="98" height="270" aria-hidden="true">
   <path d="M26 8 H94"/><circle cx="60" cy="8" r="3"/><path d="M60 8 L38 92 M60 8 L82 92"/>
   <rect class="bag${red ? ' red' : ''}" x="30" y="92" width="60" height="200" rx="16"/>
   <path class="bagline${red ? ' red' : ''}" d="M30 130 H90 M30 252 H90"/><path class="bagline${red ? ' red' : ''}" style="opacity:.4" d="M44 108 V276"/></svg>`;
-const djBook = () => `<svg viewBox="0 0 170 70" width="170" height="70" aria-hidden="true">
-  <path d="M85 20 L18 28 L10 58 L85 52 Z M85 20 L152 28 L160 58 L85 52 Z"/><path d="M85 20 V52"/>
-  <path d="M24 34 L78 28 M22 42 L78 36 M20 50 L78 44" style="opacity:.4"/>
-  <g class="book"><path class="page" d="M85 20 L150 27 L156 54 L85 49 Z"/><path d="M96 30 L142 35 M96 37 L144 42" style="opacity:.4"/></g></svg>`;
-const djBike = () => `<svg viewBox="0 0 300 190" width="300" height="190" aria-hidden="true">
-  <g class="fan"><circle cx="74" cy="118" r="44"/><circle cx="74" cy="118" r="6"/>
-  <path d="${[...Array(8)].map((_, i) => `M74 118 L${(74 + 38 * Math.cos(i * Math.PI / 4)).toFixed(1)} ${(118 + 38 * Math.sin(i * Math.PI / 4)).toFixed(1)}`).join(' ')}"/></g>
-  <path d="M74 118 L136 76 L152 40 M136 76 L174 154 M100 162 H204 M74 118 L90 50 M80 50 H108 L128 76"/>
-  <rect x="138" y="32" width="36" height="9" rx="4"/><circle cx="136" cy="130" r="10"/><path d="M136 130 L152 142"/>
-  <g transform="translate(228 98) rotate(8)"><rect width="30" height="64" rx="9"/><path d="M8 14 H22 M8 50 H22" style="opacity:.4"/></g>
-  <g transform="translate(262 100) rotate(-5)"><rect width="30" height="62" rx="9"/><path d="M8 14 H22 M8 48 H22" style="opacity:.4"/></g></svg>`;
+const djBook = () => `<svg viewBox="0 0 240 150" width="124" height="78" aria-hidden="true">
+  <path d="M14 13 L229 18 L239 141 L134 140 Q122 156 110 140 L4 141 Z" style="fill:var(--dj-floor)"/>
+  <path d="M12 120 C45 118 80 118 119 126 C150 120 200 118 230 128 L230 134 C200 126 150 126 119 133 C80 126 45 126 12 128 Z" style="fill:var(--dj-floor)"/>
+  <path d="M21 5 C50 2 80 2 103 5 L119 16 V126 C80 118 45 118 12 120 Z" style="fill:var(--dj-floor)"/>
+  <path d="M122 16 C150 6 190 10 222 12 L230 128 C200 118 150 120 120 127 Z" style="fill:var(--dj-floor)"/>
+  <path d="M26 33 L31 22 L36 33 M28 30 H34 M44 25 C60 28 80 26 94 24 M26 46 C50 50 80 48 96 44 M26 64 C50 68 80 66 96 62 M26 82 C50 78 80 84 96 80 M24 100 C50 96 80 102 98 98" style="opacity:.55"/>
+  <path d="M134 30 C160 22 190 28 214 30 M132 48 C160 44 190 50 218 48 M132 66 C160 62 190 68 218 66 M132 84 C160 80 190 86 214 84 M204 106 H216 L204 118 H216" style="opacity:.55"/>
+  <path d="M99 5 L113 11 V78 L106 70 L100 80 Z" style="fill:var(--dj-floor)"/>
+  <g class="page"><path d="M122 16 C150 6 190 10 222 12 L230 128 C200 118 150 120 120 127 Z" style="fill:var(--dj-floor)"/><path d="M134 30 C160 22 190 28 214 30 M132 48 C160 44 190 50 218 48 M132 66 C160 62 190 68 218 66 M134 84 C160 80 190 86 216 84" style="opacity:.55"/></g></svg>`;
+const djBike = () => {
+  const blades = [...Array(20)].map((_, i) => { const a = i * Math.PI / 10; return `<path d="M${(14 * Math.cos(a)).toFixed(1)} ${(14 * Math.sin(a)).toFixed(1)} L${(92 * Math.cos(a)).toFixed(1)} ${(92 * Math.sin(a)).toFixed(1)}" style="opacity:.5"/>`; }).join('');
+  const fl = 'style="fill:var(--dj-floor)"';
+  const t = (d, w) => `<path d="${d}" style="stroke-width:${w}"/><path d="${d}" style="stroke:var(--dj-floor);stroke-width:${w - 4}"/>`;   // a hollow tube drawn as two hairlines
+  return `<svg viewBox="0 0 360 300" width="225" height="152" preserveAspectRatio="none" aria-hidden="true">
+  <ellipse cx="190" cy="289" rx="168" ry="8" style="fill:var(--dj-shadow);stroke:none"/>
+  <g class="arm-a">${t('M120 206 L74 52 Q70 36 82 32', 8)}${t('M72 38 L90 31', 12)}</g>
+  <g transform="translate(115 176) scale(.66 1)"><g class="fan"><circle r="104" ${fl}/><circle r="94"/><circle r="52" style="opacity:.35"/>${blades}<circle r="17" ${fl}/></g></g>
+  <path d="M115 72 A69 104 0 0 1 115 280" style="stroke-width:2.5"/>
+  ${t('M92 285 L178 280', 9)}<circle cx="94" cy="286" r="7" ${fl}/><circle cx="176" cy="282" r="6" ${fl}/>
+  ${t('M126 270 V98 Q126 82 142 86', 10)}${t('M140 86 V54', 8)}<path d="M112 47 L160 38 L166 48 L118 58 Z" ${fl}/>
+  ${t('M130 236 L212 228 L296 236', 8)}${t('M178 280 L218 280 L334 270', 9)}<path d="M316 272 L350 266 L352 276 L318 282 Z" ${fl}/>
+  ${t('M270 238 L284 124', 9)}<path d="M262 112 L318 104 L322 112 L268 120 Z" ${fl}/>
+  <path d="M268 106 C272 90 306 86 326 94 C330 100 320 104 308 102 C292 106 280 108 268 106 Z" ${fl}/>
+  <circle cx="300" cy="128" r="5" ${fl}/><circle cx="276" cy="150" r="5" ${fl}/>
+  <ellipse cx="212" cy="238" rx="26" ry="30" ${fl}/>
+  <g class="crank"><path d="M212 238 V268 M212 238 V208"/><g class="pedal" style="transform-origin:212px 268px"><rect x="198" y="266" width="28" height="7" rx="2" ${fl}/></g><g class="pedal" style="transform-origin:212px 208px"><rect x="198" y="206" width="28" height="7" rx="2" ${fl}/></g></g>
+  <circle cx="212" cy="238" r="8" ${fl}/>
+  <g class="arm-b">${t('M134 218 L206 74 Q212 54 232 50', 8)}${t('M226 50 H268', 12)}</g>
+  </svg>`;
+};
 const djPods = () => `<svg viewBox="0 0 160 250" width="160" height="250" aria-hidden="true">
   <rect x="20" y="30" width="120" height="180" rx="12"/><path d="M50 210 V244 M110 210 V244 M32 244 H68 M92 244 H128"/>
   ${[70, 115, 160].flatMap(y => [48, 80, 112].map(x => { const lit = (x === 80 && y === 115) ? 'lit' : (x === 48 && y === 160) ? 'lit two' : ''; return `<circle cx="${x}" cy="${y}" r="15" class="pod ${lit}"/><circle cx="${x}" cy="${y}" r="7" class="pod ${lit}"/>`; })).join('')}</svg>`;
-const djTable = () => `<svg viewBox="0 0 220 170" width="300" height="232" aria-hidden="true">
-  <rect class="sc-glow" x="10" y="0" width="200" height="120" rx="14" style="fill:var(--primary);stroke:none"/>
-  <rect x="20" y="10" width="180" height="100" rx="8" style="fill:var(--dj-floor)"/><rect class="sc-screen" x="29" y="19" width="162" height="82" rx="4" style="stroke:var(--primary)"/>
-  <text class="tv-txt" x="68" y="40" text-anchor="middle" font-size="11" style="fill:var(--dj-red)">HONG</text><text class="tv-txt" x="152" y="40" text-anchor="middle" font-size="11" style="fill:#4c8df6">CHUNG</text>
-  <text class="tv-txt sc-red" x="68" y="88" text-anchor="middle" font-size="46" style="fill:var(--dj-red)">0</text>
-  <text class="tv-txt sc-colon" x="110" y="80" text-anchor="middle" font-size="28" style="fill:currentColor">:</text>
-  <text class="tv-txt sc-blue" x="152" y="88" text-anchor="middle" font-size="46" style="fill:#4c8df6">0</text>
-  <path d="M70 110 V166 M150 110 V166 M48 166 H92 M128 166 H172"/>
+const djTable = () => `<svg viewBox="0 0 400 190" width="400" height="190" aria-hidden="true">
+  <rect class="sc-glow" x="140" y="38" width="120" height="82" rx="8" style="fill:var(--primary);stroke:none"/>
+  <rect x="150" y="48" width="100" height="62" rx="5" style="fill:var(--dj-floor)"/><rect class="sc-screen" x="157" y="55" width="86" height="48" rx="3" style="stroke:var(--primary)"/><path d="M200 110 V120"/>
+  <text class="tv-txt" x="174" y="66" text-anchor="middle" font-size="8" style="fill:#4c8df6">CHUNG</text><text class="tv-txt" x="226" y="66" text-anchor="middle" font-size="8" style="fill:var(--dj-red)">HONG</text>
+  <text class="tv-txt sc-blue" x="174" y="97" text-anchor="middle" font-size="28" style="fill:#4c8df6">0</text>
+  <text class="tv-txt sc-colon" x="200" y="92" text-anchor="middle" font-size="18" style="fill:currentColor">:</text>
+  <text class="tv-txt sc-red" x="226" y="97" text-anchor="middle" font-size="28" style="fill:var(--dj-red)">0</text>
+  <rect x="8" y="120" width="384" height="10" rx="2" style="fill:var(--dj-floor)"/><path d="M30 130 V186 M370 130 V186 M30 158 H370"/>
   </svg>`;
 // x: left/right, z: depth (negative is further away). The two front bags are the ones you tap.
 const BAG_Z = -420;                                 // how far back the bag rig starts, so the front bags sit fully on screen
@@ -1973,8 +2000,8 @@ const DJ_OBJECTS = [
   ...[-690, -460, -230].map(d => BAG_Z + d).flatMap(z => [330, 480].map(x => ({ x, z, svg: () => djBagSvg(false), dim: true }))),
   { id: 'bag',      x: 330, z: BAG_Z, svg: () => djBagSvg(false, 'front'), label: 'BAG ROUNDS', front: true },
   { id: 'gauntlet', x: 480, z: BAG_Z, svg: () => djBagSvg(true, 'front'),  label: 'ENDURANCE TEST', front: true },
-  { id: 'kdb',      x: 265, z: -215, svg: djBook, label: 'KICK DATABASE' },
-  { id: 'interval', x: -410, z: -330, svg: djBike, label: 'INTERVAL' },
+  { id: 'kdb',      x: 265, z: -95, svg: djBook, label: 'KICK DATABASE' },
+  { id: 'interval', x: -320, z: -190, svg: djBike, label: 'INTERVAL' },
   { id: 'reflex',   x: -330, z: -700, svg: djPods, label: 'REACTION' },
   { id: 'spar',     x: 0,    z: -730, svg: djTable }
 ];
@@ -1988,7 +2015,7 @@ const djFloorSvg = () => {
   const o = ring(215), i = ring(188);
   return `<svg viewBox="0 0 1900 1800" preserveAspectRatio="none">
     <polygon class="oct" data-st="spar" points="${djOct(ox, oy, 215)}" style="stroke:none"/>
-    <polyline points="${o.blue}" style="stroke:#4c8df6;stroke-width:3"/><polyline points="${o.red}" style="stroke:var(--dj-red);stroke-width:3"/>
+    <polyline class="ring-blue" points="${o.blue}" style="stroke:#4c8df6;stroke-width:3"/><polyline class="ring-red" points="${o.red}" style="stroke:var(--dj-red);stroke-width:3"/>
     <polyline points="${i.blue}" style="stroke:#4c8df6;opacity:.55"/><polyline points="${i.red}" style="stroke:var(--dj-red);opacity:.55"/>
     <text x="${ox}" y="${oy + 238}" text-anchor="middle" style="fill:currentColor;stroke:none;font:700 20px var(--font-m);letter-spacing:.3em">SPARRING MAT</text></svg>`;
 };
@@ -2056,7 +2083,7 @@ function djWire() {
     if (!calm() && speed > 0.05) DJ.raf = requestAnimationFrame(glide); else view.classList.remove('panning');
   };
   view.addEventListener('pointerup', end); view.addEventListener('pointercancel', end);
-  const open = el => {
+  const open = (el, px) => {
     if (performance.now() - DJ.suppress < 350 || DJ.busy) return;      // one tap per visit: more taps while it plays are ignored
     DJ.busy = true; setTimeout(() => { DJ.busy = false; }, 1500);   // safety release if a page ever fails to open
     const id = el.dataset.st, route = DJ_ROUTE[id], swing = el.querySelector('.bag-svg.front');
@@ -2064,16 +2091,18 @@ function djWire() {
     haptic('bell');
     if (swing) {                                       // the bag takes a hit
       swing.classList.remove('hit', 'sway'); void swing.getBoundingClientRect(); swing.classList.add('hit'); setTimeout(route, 230);   // clear a leftover sway first, or it would override the hit
-    } else if (id === 'spar') {                        // the scoreboard lights up and Chung (blue) scores 2
-      const board = document.querySelector('.sc-blue'); if (board) board.closest('svg').classList.add('fx-spar');
-      const blue = document.querySelector('.sc-blue');
-      if (blue) setTimeout(() => { blue.textContent = '2'; blue.classList.add('pop'); }, 140);
-      setTimeout(route, 480);
+    } else if (id === 'spar') {                        // the right half of the mat or board scores red, the left half scores blue, and the whole thing lights up
+      const r = (el.querySelector('.bb-in') || el).getBoundingClientRect();
+      const side = px != null && px >= r.left + r.width / 2 ? 'red' : 'blue';
+      document.querySelectorAll('.dj-floor svg, [data-st=spar] svg').forEach(v => v.classList.add('fx-spar', 'lit-' + side));
+      const pts = document.querySelector('.sc-' + side);
+      if (pts) setTimeout(() => { pts.textContent = '2'; pts.classList.add('pop'); }, 140);
+      setTimeout(route, 520);
     } else {                                           // bike: the fan spins up. Reaction machine: the pods flash. Coach: points.
       el.querySelector('svg').classList.add('fx-' + id); setTimeout(route, 260);
     }
   };
-  view.tap = (x, y) => { const el = document.elementsFromPoint(x, y).map(n => n.closest && n.closest('[data-st]')).find(Boolean); if (el) open(el); };
+  view.tap = (x, y) => { const el = document.elementsFromPoint(x, y).map(n => n.closest && n.closest('[data-st]')).find(Boolean); if (el) open(el, x); };
   view.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.dataset && e.target.dataset.st) { e.preventDefault(); open(e.target); } });
 }
 let djResizeT = 0;                                   // refitting measures the layout many times, so it waits for resizing to settle
@@ -2082,12 +2111,11 @@ enter.train = () => {
   cancelAnimationFrame(DJ.raf); cancelAnimationFrame(DJ.frame); DJ.frame = 0;   // stop any leftover glide or pending frame from the last visit
   DJ.busy = false; DJ.x = 0; DJ.y = 0;                  // every visit starts in the middle of the room, facing the mat
   $('train-body').innerHTML = `<div class="dj-view" id="dj-view"><div class="dj-room" id="dj-room">
-    <div class="dj-wall far"><div class="dj-sign"><b>KADENCE // DOJO</b></div></div><div class="dj-wall side l"></div><div class="dj-wall side r"></div>
+    <div class="dj-wall far"></div><div class="dj-wall side l"></div><div class="dj-wall side r"></div>
     <div class="dj-floor">${djFloorSvg()}</div>
     ${[330, 480].map(x => `<div class="bb" style="transform:translate3d(${x}px,-270px,${BAG_Z - 400}px) rotateX(90deg)"><div class="dj-rail"></div></div>`).join('')}
     ${DJ_OBJECTS.map(o => `<div class="bb${o.dim ? ' dim' : ''}"${o.id ? ` data-st="${o.id}"` : ''}${o.id ? ' role="button" tabindex="0"' : ''} aria-label="${o.label || ''}" style="transform:translate3d(${o.x}px,0,${o.z}px)"><div class="bb-in">${o.svg()}</div>${o.label ? `<div class="st-label"><b>${o.label}</b></div>` : ''}</div>`).join('')}
   </div>
-  <div class="dj-freeze" aria-hidden="true"></div>
   <div class="dj-hud"><span>TRAIN</span></div>
   <div class="dj-hint" id="dj-hint"><div class="arrows" aria-hidden="true"><span class="arr-l">←</span><span class="arr-r">→</span></div>Swipe to move around</div></div>`;
   djApply(); djFit(); djWire();
