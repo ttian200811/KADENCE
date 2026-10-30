@@ -33,25 +33,26 @@
     --shadow: 0 1px 2px rgba(16, 24, 40, .06), 0 1px 3px rgba(16, 24, 40, .05);
     --seg-bg: #e6eaf0;
     --seg-on: #ffffff;
-    --ok: #2e9e5b;
-    --primary: #3b9a2a;
-    --hero-a: #3f9f2d; --hero-b: #1f6a1c;
-    --h1: #a8df8f; --h2: #5fbb47; --h3: #2d8a24;
+    --ok: #2456c9;
+    --primary: #2456c9;
+    --hero-a: #2f63d1; --hero-b: #16306f;
+    --h1: #b9cdf6; --h2: #6f97ea; --h3: #2a5bc8;
     --on-primary: #fff;
-    --work: var(--primary);
+    --work: #d2362e;
     --blue: var(--primary);
-    --rest: #d98a00;
-    --ready: #0e8f9c;
+    --rest: var(--primary);
+    --ready: #66758f;
     --done: var(--fg);
     --on-warm: #fff;
     --danger: #d93b30;
-    --accent: var(--work);
+    --accent: var(--primary);
     --on-accent: var(--on-primary);
     --ease: ease-out;
   }
   :root[data-theme="dark"] {
-    --hero-a: #2f7a24; --hero-b: #123619;
-    --h1: #7bd256; --h2: #49a63a; --h3: #2e7a2d;
+    --hero-a: #2b55b8; --hero-b: #101f4a;
+    --h1: #8fb0f5; --h2: #5b8def; --h3: #2f5cc4;
+    --primary: #5b8def; --work: #e5534b;
     color-scheme: dark;
     --bg: #07090c;
     --fg: #eef1f5;
@@ -67,9 +68,8 @@
     --shadow: none;
     --seg-bg: #181d24;
     --seg-on: #262d37;
-    --ok: #3fb871;
-    --rest: #e0a030;
-    --ready: #3fb5c4;
+    --ok: #5b8def;
+    --ready: #8d9bb5;
     --on-warm: #10141a;
     --danger: #e5584e;
   }
@@ -116,7 +116,7 @@
   button:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
   button:disabled, button.off { opacity: .4; cursor: default; }
   .top .back { border: 0; width: 44px; height: 44px; font-size: 1.9rem; font-weight: 300; line-height: 1; padding: 0 0 4px; color: var(--fg); border-radius: 50%; margin-left: -8px; }
-  .primary { background: var(--work); border-color: var(--work); color: var(--on-primary); font-weight: 600; font-size: 1.05rem; min-height: 54px; }
+  .primary { background: var(--primary); border-color: var(--primary); color: var(--on-primary); font-weight: 600; font-size: 1.05rem; min-height: 54px; }
   .ghost { border-color: var(--line); color: var(--dim); min-height: 54px; font-weight: 600; font-size: 1.05rem; }
   .danger { border-color: var(--danger); color: var(--danger); font-weight: 600; font-size: 1.05rem; }
   .ink { background: var(--on-primary); border-color: var(--on-primary); color: var(--primary); font-weight: 600; font-size: 1rem; min-height: 46px; padding: 0 20px; }
@@ -245,6 +245,7 @@
   #bar button { min-height: 60px; font-weight: 600; font-size: 1.1rem; }
   #main-btn { flex: 3; background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
   #reset-btn { flex: 1.3; border-color: var(--line); color: var(--dim); }
+  body[data-phase="work"]  { --accent: var(--work); --on-accent: #fff; }
   body[data-phase="rest"]  { --accent: var(--rest); --on-accent: var(--on-warm); }
   body[data-phase="ready"] { --accent: var(--ready); --on-accent: var(--on-warm); }
   body[data-phase="done"]  { --accent: var(--done); --on-accent: var(--bg); }
@@ -293,7 +294,7 @@
   .rx-btn.bad { background: var(--danger); color: #fff; }
   .rx-btn.hit { background: var(--ok); color: #fff; }
   .rx-btn.wrong { box-shadow: 0 0 0 3px var(--danger); }
-  .rx-btn.missed { box-shadow: 0 0 0 3px var(--rest); }
+  .rx-btn.missed { box-shadow: 0 0 0 3px var(--danger); }
   #rx-over { position: absolute; inset: 0; display: none; flex-direction: column; align-items: flex-start; justify-content: flex-end; gap: 10px; padding: 22px; border-radius: 12px; background: color-mix(in srgb, var(--bg) 90%, transparent); }
   #rx-over.show { display: flex; }
   #rx-over .big-t { font-size: 2.4rem; font-weight: 700; line-height: 1.05; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
@@ -316,8 +317,8 @@
   .ach.on { opacity: 1; }
   .ach .ico { width: 44px; height: 44px; border-radius: 12px; border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1rem; flex: none; }
   .ach:not(.on) b::after { content: ' · Locked'; color: var(--dim); font-weight: 400; font-size: .75rem; }
-  .ach.on .num { color: var(--work); font-weight: 600; }
-  .ach.on .bar i { background: var(--work); }
+  .ach.on .num { color: var(--primary); font-weight: 600; }
+  .ach.on .bar i { background: var(--primary); }
   .ach .body { flex: 1; min-width: 0; }
   .ach b { display: block; font-size: 1rem; font-weight: 600; }
   .ach small { color: var(--dim); display: block; margin: 1px 0 8px; font-size: .82rem; }
@@ -341,17 +342,17 @@
   #sheet h4.ctr { color: var(--dim); }
   .sheet-input.area { height: auto; padding: 12px 14px; resize: none; line-height: 1.4; display: block; }
   #sheet h4 { margin: 14px 0 4px; font-size: .85rem; font-weight: 600; }
-  #sheet h4.pro { color: var(--work); } #sheet h4.con { color: var(--rest); }
+  #sheet h4.pro { color: var(--primary); } #sheet h4.con { color: var(--rest); }
   .share-cta { width: 100%; min-height: 52px; margin-top: 12px; border: 1.5px solid var(--primary) !important; color: var(--primary) !important; background: color-mix(in srgb, var(--primary) 12%, transparent) !important; font-weight: 700; font-size: 1.02rem; }
   .sheet-actions { display: flex; gap: 10px; margin-top: 18px; }
   .sheet-actions button { flex: 1; min-height: 52px; }
   .rpe-big { font-family: var(--font-m); font-size: 3.4rem; font-weight: 500; line-height: 1; font-variant-numeric: tabular-nums; margin: 6px 0; }
-  input[type=range] { width: 100%; height: 44px; accent-color: var(--work); }
+  input[type=range] { width: 100%; height: 44px; accent-color: var(--primary); }
   input[type=range]:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
   .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
   .tags button { padding: 10px 14px; font-weight: 500; font-size: .9rem; }
-  .tags button::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--work); opacity: 0; transition: opacity .15s ease-out; }
-  .tags button[aria-pressed="true"] { border-color: var(--work); color: var(--on-primary); }
+  .tags button::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--primary); opacity: 0; transition: opacity .15s ease-out; }
+  .tags button[aria-pressed="true"] { border-color: var(--primary); color: var(--on-primary); }
   .tags button[aria-pressed="true"]::before { opacity: 1; }
   #toast { position: fixed; left: 50%; top: max(14px, env(safe-area-inset-top)); transform: translate(-50%, -16px); background: var(--fg); color: var(--bg); padding: 12px 18px; border-radius: 12px; font-weight: 600; font-size: .92rem; z-index: 60; opacity: 0; pointer-events: none;
     transition: opacity .2s ease-out, transform .2s ease-out; max-width: 90vw; text-align: center; box-shadow: 0 8px 24px -10px rgba(16, 24, 40, .35); }
@@ -360,7 +361,7 @@
   /* ===== Bottom tabs ===== */
   #nav { position: fixed; left: 0; right: 0; bottom: 0; margin: 0 auto; max-width: 560px; display: flex; background: var(--navbg); border-top: 1px solid var(--line2); padding: 0 6px max(6px, env(safe-area-inset-bottom)); z-index: 20; }
   #nav button { flex: 1; border: 0; border-radius: 0; min-height: 58px; color: var(--dim); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; font-size: .7rem; font-weight: 500; }
-  #nav button::before { content: ""; position: absolute; left: 30%; right: 30%; top: -1px; height: 2px; border-radius: 0 0 2px 2px; background: var(--primary); transform: scaleX(0); transition: transform .2s ease-out; }
+  #nav button::before { content: ""; position: absolute; left: 30%; right: 30%; top: -1px; height: 2px; border-radius: 0 0 2px 2px; background: linear-gradient(90deg, var(--primary) 50%, var(--danger) 50%); transform: scaleX(0); transition: transform .2s ease-out; }
   #nav button.on { color: var(--fg); }
   #nav button.on::before { transform: scaleX(1); }
   #nav svg { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
@@ -395,7 +396,7 @@
   .dj-view:active { cursor: grabbing; }
   .dj-view { contain: layout paint; }
   .dj-room { position: absolute; left: 50%; top: 84%; width: 0; height: 0; transform-style: preserve-3d; will-change: transform; }
-  .dj-floor { position: absolute; left: -950px; top: -900px; width: 1900px; height: 1800px; transform: translateZ(-400px) rotateX(90deg); background-color: var(--dj-floor);
+  .dj-floor { position: absolute; left: -750px; top: -900px; width: 1500px; height: 1800px; transform: translateZ(-400px) rotateX(90deg); background-color: var(--dj-floor);
     background-image: linear-gradient(var(--dj-grid2) 2px, transparent 2px), linear-gradient(90deg, var(--dj-grid2) 2px, transparent 2px), linear-gradient(var(--dj-grid) 2px, transparent 2px), linear-gradient(90deg, var(--dj-grid) 2px, transparent 2px);
     background-size: 200px 200px, 200px 200px, 100px 100px, 100px 100px; box-shadow: inset 0 0 0 3px var(--dj-grid2); }
   .dj-floor svg { position: absolute; inset: 0; width: 100%; height: 100%; color: var(--dj-line); fill: none; stroke: currentColor; stroke-width: 2; stroke-linejoin: round; }
@@ -403,9 +404,9 @@
   .dj-floor .oct { fill: transparent; pointer-events: all; cursor: pointer; }
   .dj-floor .shadow { fill: var(--dj-shadow); stroke: none; }
   .dj-wall { position: absolute; background: var(--dj-wall); border: 2px solid var(--dj-grid2); background-image: linear-gradient(90deg, var(--dj-grid) 1px, transparent 1px); background-size: 100px 100px; }
-  .dj-wall.far { left: -950px; top: calc(-1 * var(--wallh, 280px)); width: 1900px; height: var(--wallh, 280px); transform: translateZ(-1300px); }
+  .dj-wall.far { left: -750px; top: calc(-1 * var(--wallh, 280px)); width: 1500px; height: var(--wallh, 280px); transform: translateZ(-1300px); }
   .dj-wall.side { left: -650px; top: calc(-1 * var(--wallh, 280px)); width: 1300px; height: var(--wallh, 280px); }
-  .dj-wall.l { transform: translate3d(-950px, 0, -650px) rotateY(90deg); } .dj-wall.r { transform: translate3d(950px, 0, -650px) rotateY(-90deg); }
+  .dj-wall.l { transform: translate3d(-750px, 0, -650px) rotateY(90deg); } .dj-wall.r { transform: translate3d(750px, 0, -650px) rotateY(-90deg); }
   .dj-wall.far { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 70px; box-sizing: border-box; text-align: center; color: var(--dj-line); font-family: var(--font-m); }
   .dj-rail { position: absolute; left: -1.5px; top: -480px; width: 3px; height: 960px; background: var(--dj-line); opacity: .8; }
   /* An upright object: its base sits on the floor at (x, z) and it is tipped back by the camera pitch so it faces you */
@@ -449,6 +450,12 @@
   .page { transform-box: view-box; transform-origin: 120px 70px; opacity: 0; animation: page-flip 1.2s ease-in-out infinite; }
   svg.fx-kdb { transform-origin: 50% 100%; animation: st-pulse .3s ease-out; } 
   .fan { transform-box: fill-box; transform-origin: 50% 50%; }
+  .wall-shelf { position: absolute; bottom: 10px; width: 300px; display: flex; flex-direction: column; align-items: center; gap: 8px; font-family: var(--font-m); pointer-events: auto; cursor: pointer; color: var(--dj-line); -webkit-tap-highlight-color: transparent; }
+  .wall-shelf b { font-size: 21px; font-weight: 700; letter-spacing: .18em; line-height: 1; white-space: nowrap; }
+  .wall-shelf svg { display: block; overflow: visible; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; } .wall-shelf svg * { vector-effect: non-scaling-stroke; }
+  .medal { transform-box: view-box; } .medal.swing { animation: medal-swing 1.7s ease-out var(--d); }
+  @keyframes medal-swing { 0% { transform: rotate(0); } 22% { transform: rotate(calc(var(--s) * 9deg)); } 50% { transform: rotate(calc(var(--s) * -6deg)); } 75% { transform: rotate(calc(var(--s) * 3deg)); } 100% { transform: rotate(0); } }
+  svg.fx-trophy { transform-origin: 50% 100%; animation: st-pulse .3s ease-out; }
   .sc-glow { opacity: 0; animation: sc-glow 2.4s ease-in-out infinite; } .sc-screen { animation: sc-screen 2.4s ease-in-out infinite; }
   .sc-red, .sc-blue, .sc-colon { animation: sc-digit 2.4s ease-in-out infinite; } .sc-blue { animation-delay: -.3s; }
   svg.fx-spar .sc-glow { animation: sc-burst .5s ease-out; }
@@ -507,7 +514,7 @@
   .kbody .c p { margin: 0; line-height: 1.55; }
   .kbody .c ul { margin: 0; padding-left: 18px; }
   .kbody .c li { line-height: 1.55; margin: 0 0 5px; }
-  .kbody h4.pro { color: var(--work); } .kbody h4.con { color: var(--rest); }
+  .kbody h4.pro { color: var(--primary); } .kbody h4.con { color: var(--rest); }
   .klinks { display: flex; flex-direction: column; gap: 8px; }
   .klink { display: flex; justify-content: space-between; align-items: center; width: 100%; min-height: 48px; padding: 0 16px; text-align: left; background: var(--panel2); border: 0; font-weight: 600; font-size: .98rem; }
   .klink::after { transition: opacity .15s ease-out; }
@@ -590,7 +597,7 @@
   .hero .lnk { color: #fff !important; padding: 14px 0 0; }
   .hero-av { flex: none; width: 56px; height: 56px; padding: 0; border: 0 !important; border-radius: 16px; background-color: rgba(255, 255, 255, .22) !important; background-size: cover; background-position: center; background-repeat: no-repeat; box-shadow: 0 0 0 2px rgba(255, 255, 255, .85); color: #fff !important; font-weight: 700; font-size: 1.2rem; }
   .pfp { flex: none; width: 64px; height: 64px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1rem; background: var(--seg-bg) center / cover no-repeat; color: var(--dim); }
-  /* Workout calendar: one square per day, greener with each logged workout (1, 2, 3 or more) */
+  /* Workout calendar: one square per day, deeper blue with each logged workout (1, 2, 3 or more) */
   .heat { overflow-x: auto; padding-bottom: 4px; -webkit-overflow-scrolling: touch; }
   .heat::-webkit-scrollbar { display: none; }
   .hgrid { display: grid; grid-template-rows: repeat(7, var(--cs)); grid-auto-flow: column; gap: var(--cg); width: max-content; }
@@ -609,7 +616,7 @@
   .mcal-w { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; text-align: center; font-size: .72rem; color: var(--dim); margin-bottom: 6px; }
   .mcal-g { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; touch-action: pan-y; }
   .md { aspect-ratio: 1; min-height: 0 !important; width: 100%; padding: 0; border: 0 !important; border-radius: 10px; background: var(--track) !important; color: var(--fg); font-weight: 600; font-size: .95rem; font-variant-numeric: tabular-nums; }
-  .md.l1 { background: var(--h1) !important; color: #0f2a0b; } .md.l2 { background: var(--h2) !important; color: #0f2a0b; } .md.l3 { background: var(--h3) !important; color: #fff; }
+  .md.l1 { background: var(--h1) !important; color: #0b1b3d; } .md.l2 { background: var(--h2) !important; color: #0b1b3d; } .md.l3 { background: var(--h3) !important; color: #fff; }
   .md, .md:active:not(:disabled), .md:hover { transform: none !important; transition: none; }
   .md.fut { opacity: .4; }
   .md.today { box-shadow: inset 0 0 0 2px var(--fg); }
@@ -772,10 +779,33 @@
   .hero-av { border-radius: 8px; } .pfp { border-radius: 8px; }
   .mcal-h b { text-transform: uppercase; letter-spacing: .12em; font-size: .9rem; }
   /* Journal stats: a compact two-column list instead of big tiles */
+  .pstats-h { margin: 26px 0 6px; font-size: .72rem; letter-spacing: .2em; text-transform: uppercase; font-family: var(--font-m); color: var(--dim); }
   .jstats { grid-template-columns: 1fr 1fr; gap: 0 22px; }
   .jstats .stat { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; padding: 9px 0; border-top: 1px solid var(--line); border-radius: 0; background: none; }
   .jstats .stat span { order: 1; font-size: .62rem; letter-spacing: .1em; }
   .jstats .stat b { order: 2; font-size: .95rem; font-weight: 700; letter-spacing: -.02em; white-space: nowrap; }
+
+  /* ===== Quick start sessions (interval setup) ===== */
+  .qs-t { display: block; margin-bottom: 10px; font-family: var(--font-d); font-size: .72rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--dim); }
+  .qs-row { display: flex; gap: 8px; overflow-x: auto; scroll-snap-type: x proximity; scroll-padding: 0 20px; scrollbar-width: none; margin: 0 -20px; padding: 0 20px 2px; }
+  .qs-row::-webkit-scrollbar { display: none; }
+  .qs-t2 { margin-top: 16px; }
+  .qs-card { flex: 0 0 152px; scroll-snap-align: start; display: flex; flex-direction: column; align-items: flex-start; gap: 5px; padding: 12px; text-align: left; color: var(--fg); background: var(--card); border: 1px solid var(--line); border-radius: 6px; transition: border-color .15s ease-out, background .15s ease-out; -webkit-tap-highlight-color: transparent; }
+  .qs-card svg { width: 28px; height: 28px; margin-bottom: 4px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; color: var(--dim); transition: color .15s ease-out; }
+  .qs-card b { font-family: var(--font-d); font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+  .qs-card small { font-family: var(--font-m); font-size: .58rem; letter-spacing: .08em; text-transform: uppercase; color: var(--dim); }
+  .qs-n { font-family: var(--font-m); font-size: .92rem; font-variant-numeric: tabular-nums; margin-top: 4px; }
+  .qs-card em { font-style: normal; font-size: .68rem; line-height: 1.3; color: var(--dim); }
+  @media (hover: hover) { .qs-card:hover { border-color: var(--primary); } }
+  .qs-card:active { border-color: var(--primary); }
+  .qs-card.on { border-color: var(--primary); background: color-mix(in srgb, var(--primary) 14%, var(--card)); box-shadow: inset 0 0 0 1px var(--primary); }
+  .qs-card.on svg { color: var(--primary); }
+  .qs-card:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+  .stepper input.qs-flash { animation: qs-flash .9s ease-out; }
+  @keyframes qs-flash { 0% { border-color: var(--primary); box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 35%, transparent); color: var(--primary); } 100% { border-color: var(--line); box-shadow: 0 0 0 0 transparent; } }
+
+  /* ===== Blue and red (Chung and Hong) ===== */
+  .hero::before { content: ""; position: absolute; top: 0; left: 22px; right: 22px; height: 3px; border-radius: 0 0 3px 3px; background: linear-gradient(90deg, rgba(255, 255, 255, .55) 50%, #e5534b 50%); pointer-events: none; }
 </style>
 </head>
 <body data-phase="idle">
@@ -790,6 +820,38 @@
 <section id="config" class="screen">
   <header class="top"><button class="back" data-go="train" aria-label="Back">‹</button><h1 id="config-title">Interval Training / Pad Session</h1><span class="sp"></span></header>
 
+  <div class="group qs" data-modes="timer" hidden>
+    <span class="qs-t">Quick start sessions</span>
+    <div class="qs-row" id="qs-row">
+      <button class="qs-card" data-qs="power" aria-pressed="false">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="21" cy="6" r="3"/><path d="M19 10 L15 19 M19 11 L24 14 L27 11 M19 11 L13 13 L10 18 M15 19 L21 22 L20 29 M15 19 L10 24 L4 25"/></svg>
+        <b>Explosive power</b><small>Anaerobic alactic</small><span class="qs-n">10 × 15s / 45s</span><em>Short bursts, long recovery.</em>
+      </button>
+      <button class="qs-card" data-qs="base" aria-pressed="false">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M10 4 H22 Q25 4 25 7 V25 Q25 28 22 28 H10 Q7 28 7 25 V7 Q7 4 10 4Z"/><circle cx="16" cy="16" r="5"/><circle cx="16" cy="16" r="1.5"/><path d="M7 11 Q2 16 7 21"/></svg>
+        <b>Base cardio</b><small>Aerobic capacity</small><span class="qs-n">5 × 3:00 / 1:00</span><em>Steady state, fighting rounds.</em>
+      </button>
+      <button class="qs-card" data-qs="grind" aria-pressed="false">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2 V7 M10 7 H22"/><rect x="9" y="9" width="14" height="21" rx="4"/><path d="M9 14 H23 M9 25 H23"/></svg>
+        <b>Power endurance</b><small>The grind</small><span class="qs-n">8 × 45s / 30s</span><em>Lactic tolerance, high output.</em>
+      </button>
+    </div>
+    <span class="qs-t qs-t2">Round simulation</span>
+    <div class="qs-row">
+      <button class="qs-card" data-qs="seniors" aria-pressed="false">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="18" r="10"/><path d="M16 18 V12 M16 18 L20 20 M13 4 H19 M16 4 V8"/></svg>
+        <b>Seniors &amp; above</b><small>Match rounds</small><span class="qs-n">3 × 2:00 / 1:00</span><em>Full competition length.</em>
+      </button>
+      <button class="qs-card" data-qs="juniors" aria-pressed="false">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="18" r="10"/><path d="M16 18 V12 M16 18 L20 20 M13 4 H19 M16 4 V8"/></svg>
+        <b>Juniors</b><small>Match rounds</small><span class="qs-n">3 × 1:30 / 1:00</span><em>Competition pace.</em>
+      </button>
+      <button class="qs-card" data-qs="cadets" aria-pressed="false">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="18" r="10"/><path d="M16 18 V12 M16 18 L20 20 M13 4 H19 M16 4 V8"/></svg>
+        <b>Cadets &amp; below</b><small>Match rounds</small><span class="qs-n">3 × 1:00 / 1:00</span><em>Short, sharp rounds.</em>
+      </button>
+    </div>
+  </div>
   <div class="field">
     <label for="rounds">Rounds</label>
     <div class="stepper">
@@ -962,16 +1024,15 @@
 
 <!-- Journal -->
 <section id="journal" class="screen">
-  <header class="top"><button class="back" data-go="profile" aria-label="Back">‹</button><h1>Journal &amp; Stats</h1><span class="sp"></span></header>
-  <div id="jstats" class="jstats"></div>
-  <div id="jheat" style="margin:22px 0 6px"></div>
+  <header class="top"><button class="back" data-go="profile" aria-label="Back">‹</button><h1>Journal</h1><span class="sp"></span></header>
+  <div id="jheat" style="margin:6px 0 6px"></div>
   <h2 id="jh">Workouts</h2>
   <div id="jfeed"></div>
 </section>
 
 <!-- Achievements -->
 <section id="ach" class="screen">
-  <header class="top"><button class="back" data-go="profile" aria-label="Back">‹</button><h1>Achievements</h1><span class="sp"></span></header>
+  <header class="top"><button class="back" data-go="train" aria-label="Back">‹</button><h1>Achievements</h1><span class="sp"></span></header>
   <div id="alist"></div>
 </section>
 
@@ -1223,15 +1284,15 @@ function paywallSheet(feature, onUnlock, onClose) {
 }
 
 /* ---------- Settings manager ---------- */
-// The accent is always green: [color, text-on-color] per theme.
-const ACCENT = { dark: ['#7bd256', '#08140d'], light: ['#3b9a2a', '#fff'] };
+// The accent is always blue: [color, text-on-color] per theme.
+const ACCENT = { dark: ['#5b8def', '#08101f'], light: ['#2456c9', '#fff'] };
 const Settings = {
   key: 'tkd-settings',
   defaults: { theme: 'light', bell: 'classic', voice: '', rate: 1.1, reduceMotion: false, situational: true, silentPlay: true, spokenCues: true },
   data: {},
   load() { this.data = Object.assign({}, this.defaults, load(this.key, {})); },
   set(k, v) { this.data[k] = v; save(this.key, this.data); this.apply(); },
-  // Applies the theme and the green accent through CSS variables on :root.
+  // Applies the theme and the blue accent through CSS variables on :root.
   apply() {
     if (this.data.theme !== 'light' && this.data.theme !== 'dark') this.data.theme = 'light';
     this.data.rate = Math.min(2, Math.max(0.5, num(this.data.rate, 1.1)));
@@ -1744,7 +1805,6 @@ function nav(id) {
   show(id);
 }
 const esc = t => String(t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-const meter = p => `<div class="meter"><i style="width:${Math.round(Math.max(0, Math.min(1, p)) * 100)}%"></i></div>`;
 let playerName = load('tkd-name', '');
 
 /* ---------- Weekly goals ---------- */
@@ -1816,7 +1876,6 @@ enter.profile = () => {
   const name = playerName || 'Name';
   const recentCombos = combos.slice(-3).reverse();
   const recentLog = log.slice(-3).reverse();
-  const nearAch = nearAchievements(3);
   const pfp = load('tkd-pfp', ''), heroImg = load('tkd-hero', '');
   const initial = esc(name.trim().split(/\s+/).map(w => w[0]).join('').slice(0, 2).toUpperCase() || 'N');
   $('profile-body').innerHTML = `
@@ -1828,11 +1887,10 @@ enter.profile = () => {
     <div class="ed">${goalHtml()}</div>
     <button class="row" data-go="favs"><span class="rt">Favorite combos</span><span class="rc">${combos.length}</span><span class="arr">→</span>
       <div class="prev">${recentCombos.length ? recentCombos.map(c => `<div class="line"><span>${mergeKicks(c.kicks).map(i => esc(i.text)).join(' · ')}</span><span>${CAT_LABEL[c.cat]}</span></div>`).join('') : '<div class="dim">Ask the coach in the Train tab to build combos.</div>'}</div></button>
-    <button class="row" data-go="ach"><span class="rt">Achievements</span><span class="rc">${unlocked.length}<small> / ${ACH.length}</small></span><span class="arr">→</span>
-      <div class="prev agoals">${nearAch.length ? nearAch.map(a => `<div class="ag"><div class="ag-top"><b>${esc(a.name)}</b><em>${esc(a.label())}</em></div>${meter(a.pct())}</div>`).join('') : '<div class="dim">Every achievement is unlocked.</div>'}</div></button>
     <button class="row" data-go="journal"><span class="rt">Training journal</span><span class="rc">${log.length}</span><span class="arr">→</span>
       <div class="heat-mini">${heatmap(18, 10, 3, null, false)}</div>
-      <div class="prev">${recentLog.length ? recentLog.map(e => `<div class="line"><span>${new Date(e.ts).toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'short' })} · ${mmss(e.secs)}</span><span>RPE ${e.rpe}</span></div>`).join('') : '<div class="dim">Log a workout to see it here.</div>'}</div></button>`;
+      <div class="prev">${recentLog.length ? recentLog.map(e => `<div class="line"><span>${new Date(e.ts).toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'short' })} · ${mmss(e.secs)}</span><span>RPE ${e.rpe}</span></div>`).join('') : '<div class="dim">Log a workout to see it here.</div>'}</div></button>
+    ${statsHtml()}`;
   if (pfp) $('p-avatar').style.backgroundImage = `url(${pfp})`;
   if (heroImg) $('p-hero').style.backgroundImage = `linear-gradient(rgba(0,0,0,.3), rgba(0,0,0,.6)), url(${heroImg})`;
   $('p-avatar').onclick = () => nameSheet();
@@ -1946,7 +2004,7 @@ function nameSheet(st) {
 /* ---------- Train tab: the Dojang ---------- */
 // A 3D gym. The floor is a plane laid flat, upright pieces stand on it, and the whole room is pitched down slightly towards you.
 // Drag sideways to look around the room; there is a little give up and down too.
-const DJ = { frame: 0, busy: false, x: 0, y: 0, z: 260, minX: -480, maxX: 570, minY: -60, maxY: 60, minZ: 260, maxZ: 260, raf: 0, suppress: 0, hintGone: false };
+const DJ = { frame: 0, busy: false, x: 0, y: 0, z: 260, minX: -440, maxX: 400, minY: -60, maxY: 60, minZ: 260, maxZ: 260, raf: 0, suppress: 0, hintGone: false };
 const djOct = (cx, cy, r) => [...Array(8)].map((_, i) => { const a = Math.PI / 8 + i * Math.PI / 4; return (cx + r * Math.cos(a)).toFixed(1) + ',' + (cy + r * Math.sin(a)).toFixed(1); }).join(' ');
 const djBagSvg = (red, cls = '') => `<svg class="bag-svg ${cls}" viewBox="0 0 120 330" width="98" height="270" aria-hidden="true">
   <path d="M26 8 H94"/><circle cx="60" cy="8" r="3"/><path d="M60 8 L38 92 M60 8 L82 92"/>
@@ -1994,6 +2052,39 @@ const djTable = () => `<svg viewBox="0 0 400 190" width="400" height="190" aria-
   <text class="tv-txt sc-red" x="226" y="97" text-anchor="middle" font-size="28" style="fill:var(--dj-red)">0</text>
   <rect x="8" y="120" width="384" height="10" rx="2" style="fill:var(--dj-floor)"/><path d="M30 130 V186 M370 130 V186 M30 158 H370"/>
   </svg>`;
+// The trophy shelf on the back wall: every unlocked achievement adds a piece. Harder ones are big trophies on top, easier ones are medals hanging below.
+const TROPHY_ORDER = ['grass', 'over', 'world', 'lee', 'mrspeed', 'zandi', 'discmax', 'seo', 'elite'];          // most impressive first, placed from the middle of the shelf outwards
+const TROPHY_SHAPE = { grass: 'cup', over: 'star', world: 'cup', lee: 'plaque', mrspeed: 'star', zandi: 'cup', discmax: 'plaque', seo: 'cup', elite: 'star' };
+const MEDAL_ORDER = ['first', 'arch', 'def', 'clinch', 'iron', 'speed', 'disc', 'front', 'kicks', 'inventor'];
+const MEDAL_RIBBON = ['#d6453d', '#4c8df6', '#1f3f99', '#a83a35', '#7aa7f5'];
+const djTrophy = () => {
+  const gold = 'style="fill:#e0b13c;fill-opacity:.9"', fl = 'style="fill:var(--dj-floor)"', Y = 114;
+  const base = (x, w, h) => `<rect x="${(x - w / 2).toFixed(1)}" y="${Y - h}" width="${w.toFixed(1)}" height="${h}" rx="2" ${fl}/>`;
+  const shape = {
+    cup: (x, h) => { const w = h * .52, bh = h * .1, st = h * .2, bo = h * .62, ty = Y - bh - st - bo, hd = (sg) => `<path d="M${x + sg * w / 2} ${ty + bo * .12} C${x + sg * w * .95} ${ty + bo * .05} ${x + sg * w * .85} ${ty + bo * .6} ${x + sg * w * .3} ${ty + bo * .7}"/>`;
+      return `${hd(-1)}${hd(1)}${base(x, w * .8, bh)}<rect x="${(x - w * .07).toFixed(1)}" y="${(Y - bh - st).toFixed(1)}" width="${(w * .14).toFixed(1)}" height="${st}" ${fl}/>
+        <path d="M${x - w / 2} ${ty} H${x + w / 2} C${x + w / 2} ${ty + bo * .8} ${x + w * .15} ${ty + bo * .96} ${x} ${ty + bo} C${x - w * .15} ${ty + bo * .96} ${x - w / 2} ${ty + bo * .8} ${x - w / 2} ${ty} Z" ${gold}/>`; },
+    star: (x, h) => { const bh = h * .12, st = h * .22, r = h * .34, cy = Y - bh - st - r * .75, pts = [...Array(10)].map((_, i) => { const a = -Math.PI / 2 + i * Math.PI / 5, q = i % 2 ? r * .45 : r; return (x + q * Math.cos(a)).toFixed(1) + ',' + (cy + q * Math.sin(a)).toFixed(1); }).join(' ');
+      return `${base(x, h * .5, bh)}<rect x="${(x - h * .04).toFixed(1)}" y="${(Y - bh - st).toFixed(1)}" width="${(h * .08).toFixed(1)}" height="${st}" ${fl}/><polygon points="${pts}" ${gold}/>`; },
+    plaque: (x, h) => { const bh = h * .1, w = h * .5, ph = h * .86;
+      return `${base(x, w * 1.1, bh)}<rect x="${(x - w / 2).toFixed(1)}" y="${(Y - bh - ph).toFixed(1)}" width="${w.toFixed(1)}" height="${ph.toFixed(1)}" rx="3" ${fl}/><rect x="${(x - w * .34).toFixed(1)}" y="${(Y - bh - ph * .9).toFixed(1)}" width="${(w * .68).toFixed(1)}" height="${(ph * .6).toFixed(1)}" rx="2" ${gold}/><path d="M${x - w * .2} ${Y - bh - ph * .2} H${x + w * .2}" style="opacity:.55"/>`; }
+  };
+  const trophies = TROPHY_ORDER.map((id, rank) => ({ id, rank })).filter(t => unlocked.includes(t.id)).map(t => {
+    const slot = [0, 1, -1, 2, -2, 3, -3, 4, -4][t.rank];
+    return shape[TROPHY_SHAPE[t.id]](230 + slot * 46, 98 - t.rank * 5);
+  }).join('');
+  const hooks = [...Array(MEDAL_ORDER.length)].map((_, i) => 40 + i * 42);
+  const medals = MEDAL_ORDER.map((id, i) => ({ id, x: hooks[i], i })).filter(m => unlocked.includes(m.id)).map(m => {
+    const len = 30 + (m.i * 7) % 16, col = MEDAL_RIBBON[m.i % MEDAL_RIBBON.length], hy = 130, dy = hy + len;
+    return `<g class="medal" style="transform-origin:${m.x}px ${hy}px;--s:${m.i % 2 ? 1 : -1};--d:${(m.i % 4) * .05}s"><path d="M${m.x - 4} ${hy} V${dy} L${m.x} ${dy - 5} L${m.x + 4} ${dy} V${hy} Z" style="fill:${col};fill-opacity:.85"/><circle cx="${m.x}" cy="${dy + 8}" r="9" ${gold}/><circle cx="${m.x}" cy="${dy + 8}" r="5" style="opacity:.6"/></g>`;
+  }).join('');
+  return `<svg viewBox="0 0 460 230" width="300" height="150" aria-hidden="true">
+  <path d="M28 114 V150 M432 114 V150" style="opacity:.5"/>
+  <rect x="26" y="124" width="408" height="14" rx="2" ${fl}/>${hooks.map(x => `<path d="M${x} 124 V130" style="stroke-width:3"/>`).join('')}
+  ${trophies}
+  <path d="M10 114 H450 L440 124 H20 Z" style="fill:var(--dj-floor);stroke-width:2.5"/>
+  ${medals}</svg>`;
+};
 // x: left/right, z: depth (negative is further away). The two front bags are the ones you tap.
 const BAG_Z = -420;                                 // how far back the bag rig starts, so the front bags sit fully on screen
 const DJ_OBJECTS = [
@@ -2003,17 +2094,17 @@ const DJ_OBJECTS = [
   { id: 'kdb',      x: 265, z: -95, svg: djBook, label: 'KICK DATABASE' },
   { id: 'interval', x: -320, z: -190, svg: djBike, label: 'INTERVAL' },
   { id: 'reflex',   x: -330, z: -700, svg: djPods, label: 'REACTION' },
-  { id: 'spar',     x: 0,    z: -730, svg: djTable }
+  { id: 'spar',     x: 0,    z: -645, svg: djTable }
 ];
-const DJ_ROUTE = { kdb: () => show('kdb'), bag: () => openMode('callout'), gauntlet: () => show('gauntlet'), interval: () => openMode('timer'), spar: () => show('spar'), reflex: () => show('reflex') };
+const DJ_ROUTE = { kdb: () => show('kdb'), trophy: () => show('ach'), bag: () => openMode('callout'), gauntlet: () => show('gauntlet'), interval: () => openMode('timer'), spar: () => show('spar'), reflex: () => show('reflex') };
 // Octagon on the floor (strictly a flat mat, no cage). Floor local coordinates: x 800 is the room's centre line, y 1000 is z = 0.
 const djFloorSvg = () => {
-  const ox = 950, oy = 1300 - 420;
+  const ox = 750, oy = 1300 - 420;
   const ring = r => { const v = [...Array(8)].map((_, i) => { const a = Math.PI / 8 + i * Math.PI / 4; return [ox + r * Math.cos(a), oy + r * Math.sin(a)]; });
     const mid = (p, q) => [(p[0] + q[0]) / 2, (p[1] + q[1]) / 2], pts = l => l.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ');
     return { blue: pts([mid(v[1], v[2]), v[2], v[3], v[4], v[5], mid(v[5], v[6])]), red: pts([mid(v[5], v[6]), v[6], v[7], v[0], v[1], mid(v[1], v[2])]) }; };
   const o = ring(215), i = ring(188);
-  return `<svg viewBox="0 0 1900 1800" preserveAspectRatio="none">
+  return `<svg viewBox="0 0 1500 1800" preserveAspectRatio="none">
     <polygon class="oct" data-st="spar" points="${djOct(ox, oy, 215)}" style="stroke:none"/>
     <polyline class="ring-blue" points="${o.blue}" style="stroke:#4c8df6;stroke-width:3"/><polyline class="ring-red" points="${o.red}" style="stroke:var(--dj-red);stroke-width:3"/>
     <polyline points="${i.blue}" style="stroke:#4c8df6;opacity:.55"/><polyline points="${i.red}" style="stroke:var(--dj-red);opacity:.55"/>
@@ -2047,7 +2138,11 @@ function djFit() {
   }
   root.setProperty('--wallh', hi + 'px');
 }
-function djHint() {}                                  // the caption at the bottom stays on screen
+function djHint() {}
+function djSwing(view) {                              // the medals on the trophy shelf swing when the room is moved
+  if (calm()) return;
+  view.querySelectorAll('.medal').forEach(m => { m.classList.remove('swing'); void m.getBoundingClientRect(); m.classList.add('swing'); });
+}                                  // the caption at the bottom stays on screen
 function djWire() {
   const view = $('dj-view');
   let drag = null;
@@ -2058,7 +2153,7 @@ function djWire() {
   view.addEventListener('pointermove', e => {
     if (!drag || e.pointerId !== drag.id) return;
     const dx = e.clientX - drag.sx, dy = e.clientY - drag.sy;
-    if (!drag.moved && Math.hypot(dx, dy) > 6) { drag.moved = true; djHint(); view.classList.add('panning'); try { view.setPointerCapture(e.pointerId); } catch (err) {} }
+    if (!drag.moved && Math.hypot(dx, dy) > 6) { drag.moved = true; djHint(); djSwing(view); view.classList.add('panning'); try { view.setPointerCapture(e.pointerId); } catch (err) {} }
     if (!drag.moved) return;
     const now = performance.now(), dt = Math.max(1, now - drag.t);
     drag.vx = 0.8 * drag.vx + 0.2 * (e.clientX - drag.px) / dt; drag.vy = 0.8 * drag.vy + 0.2 * (e.clientY - drag.py) / dt;
@@ -2073,7 +2168,7 @@ function djWire() {
     DJ.suppress = performance.now();                   // the click that follows a drag must not open a station
     let vx = d.vx * 1.15, vy = d.vy * 0.6, last = performance.now();
     const speed = Math.abs(vx);
-    if (!calm() && speed > 0.6) view.querySelectorAll('.bag-svg.front').forEach(b => { b.classList.remove('sway', 'hit'); void b.getBoundingClientRect(); b.classList.add('sway'); });   // the bags rock as you whip past
+    if (!calm() && speed > 0.6) { view.querySelectorAll('.bag-svg.front').forEach(b => { b.classList.remove('sway', 'hit'); void b.getBoundingClientRect(); b.classList.add('sway'); }); djSwing(view); }   // the bags and medals rock as you whip past
     const glide = () => {                              // a little momentum after you let go
       const now = performance.now(), dt = now - last; last = now;
       DJ.x += vx * dt; DJ.y += vy * dt; djApply();
@@ -2099,7 +2194,7 @@ function djWire() {
       if (pts) setTimeout(() => { pts.textContent = '2'; pts.classList.add('pop'); }, 140);
       setTimeout(route, 520);
     } else {                                           // bike: the fan spins up. Reaction machine: the pods flash. Coach: points.
-      el.querySelector('svg').classList.add('fx-' + id); setTimeout(route, 260);
+      el.querySelector('svg').classList.add('fx-' + id); if (id === 'trophy') djSwing(view); setTimeout(route, id === 'trophy' ? 600 : 260);
     }
   };
   view.tap = (x, y) => { const el = document.elementsFromPoint(x, y).map(n => n.closest && n.closest('[data-st]')).find(Boolean); if (el) open(el, x); };
@@ -2111,10 +2206,10 @@ enter.train = () => {
   cancelAnimationFrame(DJ.raf); cancelAnimationFrame(DJ.frame); DJ.frame = 0;   // stop any leftover glide or pending frame from the last visit
   DJ.busy = false; DJ.x = 0; DJ.y = 0;                  // every visit starts in the middle of the room, facing the mat
   $('train-body').innerHTML = `<div class="dj-view" id="dj-view"><div class="dj-room" id="dj-room">
-    <div class="dj-wall far"></div><div class="dj-wall side l"></div><div class="dj-wall side r"></div>
+    <div class="dj-wall far"><div class="wall-shelf" data-st="trophy" role="button" tabindex="0" aria-label="Trophy shelf" style="left:520px">${djTrophy()}<b>TROPHY SHELF</b></div></div><div class="dj-wall side l"></div><div class="dj-wall side r"></div>
     <div class="dj-floor">${djFloorSvg()}</div>
     ${[330, 480].map(x => `<div class="bb" style="transform:translate3d(${x}px,-270px,${BAG_Z - 400}px) rotateX(90deg)"><div class="dj-rail"></div></div>`).join('')}
-    ${DJ_OBJECTS.map(o => `<div class="bb${o.dim ? ' dim' : ''}"${o.id ? ` data-st="${o.id}"` : ''}${o.id ? ' role="button" tabindex="0"' : ''} aria-label="${o.label || ''}" style="transform:translate3d(${o.x}px,0,${o.z}px)"><div class="bb-in">${o.svg()}</div>${o.label ? `<div class="st-label"><b>${o.label}</b></div>` : ''}</div>`).join('')}
+    ${DJ_OBJECTS.map(o => `<div class="bb${o.dim ? ' dim' : ''}"${o.id ? ` data-st="${o.id}"` : ''}${o.id ? ' role="button" tabindex="0"' : ''} aria-label="${o.label || ''}" style="transform:translate3d(${o.x}px,0,${o.z}px)"><div class="bb-in">${o.svg()}</div>${o.label ? `<div class="st-label"><b${o.big ? ' style="font-size:1.45rem"' : ''}>${o.label}</b></div>` : ''}</div>`).join('')}
   </div>
   <div class="dj-hud"><span>TRAIN</span></div>
   <div class="dj-hint" id="dj-hint"><div class="arrows" aria-hidden="true"><span class="arr-l">←</span><span class="arr-r">→</span></div>Swipe to move around</div></div>`;
@@ -2147,7 +2242,20 @@ function renderConfig() {
   for (const c of ['offensive', 'defensive', 'clinch']) $('c-' + c).disabled = !combos.some(x => x.cat === c);
   if (cfg.favCat !== 'all' && !combos.some(x => x.cat === cfg.favCat)) cfg.favCat = 'all';
   document.querySelector(`input[name=favcat][value=${cfg.favCat}]`).checked = true;
+  qsMark();
 }
+// Quick start sessions: a tap fills in rounds, work and rest below; the Go button still starts it.
+const QS = { power: { rounds: 10, round: 15, rest: 45 }, base: { rounds: 5, round: 180, rest: 60 }, grind: { rounds: 8, round: 45, rest: 30 },
+  seniors: { rounds: 3, round: 120, rest: 60 }, juniors: { rounds: 3, round: 90, rest: 60 }, cadets: { rounds: 3, round: 60, rest: 60 } };
+function qsMark() {
+  document.querySelectorAll('.qs-card').forEach(b => { const p = QS[b.dataset.qs], on = cfg.rounds === p.rounds && cfg.round === p.round && cfg.rest === p.rest; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); });
+}
+document.querySelector('.qs').addEventListener('click', e => {
+  const b = e.target.closest('.qs-card'); if (!b) return;
+  Object.assign(cfg, QS[b.dataset.qs]);
+  renderConfig();
+  ['rounds', 'round', 'rest'].forEach(k => { const f = $(k); f.classList.remove('qs-flash'); void f.offsetWidth; f.classList.add('qs-flash'); });
+});
 document.querySelectorAll('.stepper button[data-k]').forEach(b => b.addEventListener('click', () => {
   const k = b.dataset.k;
   cfg[k] = clamp(k, cfg[k] + Number(b.dataset.d));
@@ -3018,8 +3126,8 @@ function renderFavs() {
 // Buttons flash and you choose where to tap. Three decision types, with an adaptive time window.
 const RX_MODES = {
   choice: 'One button lights up. Tap it as fast as you can.',
-  gonogo: 'Green: tap it. Red: hold still and let it pass.',
-  pick:   'Several buttons light up. Tap only the green one.'
+  gonogo: 'Blue: tap it. Red: hold still and let it pass.',
+  pick:   'Several buttons light up. Tap only the blue one.'
 };
 const RX_TRIALS = 20;
 const RX_COLS = { 4: 2, 6: 3, 9: 3 };
@@ -3214,8 +3322,8 @@ function monthCal(selKey) {
   return `<div class="mcal"><div class="mcal-h"><button data-nav="-1" aria-label="Previous month">‹</button><div><b>${first.toLocaleDateString(undefined, { month: 'long', year: 'numeric' })}</b><small>${total} workout${total === 1 ? '' : 's'}</small></div><button data-nav="1" aria-label="Next month" ${isNow ? 'disabled' : ''}>›</button></div>
     <div class="mcal-w">${wk}</div><div class="mcal-g">${cells}</div></div>`;
 }
-enter.journal = () => { jDay = null; jMonth = { y: new Date().getFullYear(), m: new Date().getMonth() }; renderJournal(); };
-function renderJournal() {
+// The stats list shown at the bottom of the profile.
+function statsHtml() {
   const totalSecs = log.reduce((a, e) => a + e.secs, 0);
   const avgRpe = log.length ? (log.reduce((a, e) => a + e.rpe, 0) / log.length).toFixed(1) : '—';
   const st = streaks(stats.days);
@@ -3223,7 +3331,10 @@ function renderJournal() {
   const tiles = [[log.length, 'Logged workouts'], [fmtTotal, 'Logged time'], [avgRpe, 'Average RPE'], [st.cur + (st.cur === 1 ? ' day' : ' days'), 'Current streak'],
     [stats.kicks.toLocaleString(), 'Kicks thrown (est.)'], [stats.combos.toLocaleString(), 'Combos called'],
     [gauntlet.best ? mmss(gauntlet.best) : '—', 'Gauntlet best'], [reflex.count ? Math.round(reflex.sum / reflex.count) + ' ms' : '—', 'Reflex average']];
-  $('jstats').innerHTML = tiles.map(([v, l]) => `<div class="stat"><b>${v}</b><span>${l}</span></div>`).join('');
+  return `<h2 class="pstats-h">Stats</h2><div class="jstats">${tiles.map(([v, l]) => `<div class="stat"><b>${v}</b><span>${l}</span></div>`).join('')}</div>`;
+}
+enter.journal = () => { jDay = null; jMonth = { y: new Date().getFullYear(), m: new Date().getMonth() }; renderJournal(); };
+function renderJournal() {
   $('jheat').innerHTML = monthCal(jDay) + '<div class="hleg">Less <i class="hc"></i><i class="hc l1"></i><i class="hc l2"></i><i class="hc l3"></i> More</div>';
   $('jh').innerHTML = jDay ? `<span>${new Date(jDay + 'T12:00').toLocaleDateString(undefined, { weekday: 'long', day: 'numeric', month: 'short' })}</span><button id="j-clear">Show all</button>` : 'Workouts';
   if (jDay) $('j-clear').onclick = () => { jDay = null; renderJournal(); };
@@ -3303,15 +3414,6 @@ const ACH = [
     label: () => { const o = ACH.filter(a => a.id !== 'grass'); return `${o.filter(a => unlocked.includes(a.id)).length} / ${o.length}`; } }
 ];
 // Runs after every workout log, saved combo, Reflex round and Gauntlet run. Two passes so the completionist badge can land in the same check.
-// The three locked achievements you're closest to. Anything under 10% doesn't count as "close", so a brand-new fighter just sees the easiest goals.
-const ACH_EASY = ['first', 'arch', 'def', 'clinch', 'iron', 'speed', 'disc', 'front', 'kicks', 'mrspeed', 'inventor', 'elite', 'discmax', 'zandi', 'lee', 'seo', 'world', 'over', 'grass'];
-function nearAchievements(n) {
-  const ease = a => { const i = ACH_EASY.indexOf(a.id); return i < 0 ? 99 : i; };
-  const locked = ACH.filter(a => !unlocked.includes(a.id));
-  const near = locked.filter(a => a.pct() >= 0.1).sort((a, b) => b.pct() - a.pct() || ease(a) - ease(b)).slice(0, n);
-  const rest = locked.filter(a => !near.includes(a)).sort((a, b) => ease(a) - ease(b));
-  return near.concat(rest).slice(0, n);
-}
 function checkAch() {
   const fresh = [];
   for (let pass = 0; pass < 2; pass++) {
